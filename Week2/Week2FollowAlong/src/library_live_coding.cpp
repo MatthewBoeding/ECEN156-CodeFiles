@@ -19,8 +19,13 @@ using namespace std;
 // - char genre[20]
 // - int pages
 // - bool isCheckedOut
-
-
+struct Book{
+  int id;
+  char title[50];
+  char genre[20];
+  int pages;
+  bool isCheckedOut;   
+};
 
 // ============================================================================
 // STEP 2: Basic struct usage
@@ -31,9 +36,17 @@ void step2_basic_usage() {
     
     // TODO: Create a book using brace initialization
     // Book book1 = {...};
-    
+    Book theHobbit;
+    theHobbit.id = 1000;
+    strcpy(theHobbit.title, "The Hobbit");
+    strcpy(theHobbit.genre, "Fantasy");
+    theHobbit.pages = 394;
+    theHobbit.isCheckedOut = true;
+
+
+    Book HarryPotter = {1001, "Harry Potter", "Fantasy", 394, false};
     // TODO: Print the title and pages using dot operator
-    
+    std::cout << "Title: " << theHobbit.title << endl;
     // TODO: Modify isCheckedOut to true
     
     // TODO: Print the updated checkout status
@@ -50,9 +63,22 @@ void step3_arrays() {
     
     // TODO: Create an array of 4 books with brace initialization
     // Book library[4] = { ... };
-    
+    int arr[4] = {1,2,3,4};
+    Book library[4] = {
+        {101, "Lord of the Rings", "Fantasy", 310, false}, //library[0]
+        {102, "Dune", "Fantasy", 180, true},
+        {87646, "Dork Diaries", "Fantasy", 534, false},
+        {0, "invalid", "fiction", 2435, true},
+    };
+
+    library[3].id = 21342;
+
     // TODO: Loop through and print each book's id and title
-    
+    for(int i = 0; i < 4; i++)
+    {
+        std::cout << library[i].id << ": " << library[i].title << endl; 
+         
+    }
     cout << endl;
 }
 
@@ -64,8 +90,16 @@ void step3_arrays() {
 // Count how many books are checked out
 // Hint: Loop through, check isCheckedOut, increment counter
 int countCheckedOut(const Book books[], int size) {
-    // Your code here
-    return 0;
+    int count = 0;
+    for(int i = 0; i<size;i++)
+    {
+        Book compBook = books[i];
+        if(compBook.isCheckedOut == true)
+        {
+            ++count;
+        }
+    }
+    return count;
 }
 
 void step4_counting() {
@@ -92,8 +126,13 @@ void step4_counting() {
 // Calculate the average page count across all books
 // Hint: Sum all pages, divide by size
 double averagePages(const Book books[], int size) {
-    // Your code here
-    return 0.0;
+    double average = 0;
+    for(int i = 0; i<size; i++)
+    {
+        average = average + books[i].pages;
+    }
+    average = average / size;
+    return average;
 }
 
 void step5_average() {
@@ -120,8 +159,17 @@ void step5_average() {
 // Find and return the book with the most pages
 // Hint: Start with first book, compare with rest, keep track of longest
 Book findLongestBook(const Book books[], int size) {
-    // Your code here
-    return books[0];  // Replace this
+    Book maxBook = books[0];
+
+
+    for(int i =1; i<size;i++)
+    {
+        if(maxBook.pages < books[i].pages)
+        {
+            maxBook = books[i];
+        }
+    }
+    return maxBook;  // Replace this
 }
 
 void step6_find_max() {
@@ -149,8 +197,15 @@ void step6_find_max() {
 // Count how many books match the given genre
 // Hint: Use strcmp(books[i].genre, genre) == 0 to compare strings
 int countByGenre(const Book books[], int size, const char* genre) {
-    // Your code here
-    return 0;
+    int count=0; 
+    for(int i =0; i<size; i++)
+    {
+            if(strcmp(books[i].genre, genre) == 0)
+            {
+                count++;
+            }
+    }
+    return count;
 }
 
 void step7_strcmp() {
@@ -180,7 +235,9 @@ void step7_strcmp() {
 // Return pointer to the book if found, nullptr if not found
 // Hint: Loop through, when found return &books[i]
 Book* findBookById(Book books[], int size, int searchId) {
-    // Your code here
+    
+
+
     return nullptr;
 }
 
@@ -308,19 +365,33 @@ void step10_filter() {
 // ============================================================================
 // MAIN - Uncomment function calls as we progress through lecture
 // ============================================================================
+int * pointer_practice()
+{
+    char x = 8;
+    char * ptr = &x; 
+    *ptr = 'q'; //assigning a value
+    char q = *ptr; 
+    char * q_ptr = &q;
+    int * i_ptr = (int *)(ptr); 
+    ptr++;
+    i_ptr++;
+    return 0; 
+
+}
+
 
 int main() {
     cout << "Week 2: Introduction to Structs" << endl;
     cout << "================================" << endl << endl;
     
     // Uncomment these one at a time as we cover each section:
-    
-    // step2_basic_usage();
-    // step3_arrays();
-    // step4_counting();
-    // step5_average();
-    // step6_find_max();
-    // step7_strcmp();
+    pointer_practice();
+    step2_basic_usage();
+    step3_arrays();
+    step4_counting();
+    step5_average();
+    step6_find_max();
+    step7_strcmp();
     // step8_pointers();
     // step9_modify();
     // step10_filter();
