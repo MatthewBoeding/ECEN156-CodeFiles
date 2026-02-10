@@ -13,29 +13,21 @@ using namespace std;
 // STEP 1: Declare the Student class
 // ============================================================================
 
-class Student {
-private:
-    // TODO STEP 1:
-    // Add the following private data members:
-    // - int studentId
-    // - char name[50]
-    // - double gpa
-    // - int credits
+class Student{
+    private:
+        int studentId;
+        char name[50];
+        double gpa;
+        int credits;
 
 
-
-public:
     // ========================================================================
     // STEP 2: Default Constructor
     // ========================================================================
-    
-    // TODO STEP 2:
-    // Create a default constructor that:
-    // - Prints "[Default Student constructor called]"
-    // - Sets studentId to 0
-    // - Sets name to an empty string
-    // - Sets gpa to 0.0
-    // - Sets credits to 0
+    public:
+        Student();
+        Student(int id, const char* studentName, double studentGpa, int studentCredits);
+
 
 
 
@@ -129,6 +121,24 @@ public:
     // - Rejects zero or negative values
     // - Prints success or error messages
 };
+
+Student::Student(){
+    // Default Constructor
+    std::cout << "[Default Student constructor called]" << endl;
+    studentId = 0;
+    strcpy(name, "");
+    gpa = 0.0;
+    credits = 0;
+}
+
+Student::Student(int id, const char* studentName, double studentGpa, int studentCredits)
+{
+    if(id > 0)
+    {
+       studentId = id; 
+    }
+
+}
 
 // ============================================================================
 // TESTING FUNCTION (DO NOT MODIFY)
