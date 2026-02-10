@@ -1,0 +1,83 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "CMake: Configure",
+            "type": "shell",
+            "command": "cmake",
+            "args": [
+                "-B",
+                "${workspaceFolder}/build",
+                "-S",
+                "${workspaceFolder}",
+                "-DCMAKE_BUILD_TYPE=Debug"
+            ],
+            "group": "build",
+            "problemMatcher": []
+        },
+        {
+            "label": "Build: hotel_test_week5",
+            "type": "shell",
+            "command": "cmake",
+            "args": [
+                "--build",
+                "${workspaceFolder}/build",
+                "--target",
+                "hotel_test_week5"
+            ],
+            "group": "build",
+            "problemMatcher": ["$gcc"],
+            "dependsOn": "CMake: Configure"
+        },
+        {
+            "label": "Build: hotel_test_week6",
+            "type": "shell",
+            "command": "cmake",
+            "args": [
+                "--build",
+                "${workspaceFolder}/build",
+                "--target",
+                "hotel_test_week6"
+            ],
+            "group": "build",
+            "problemMatcher": ["$gcc"],
+            "dependsOn": "CMake: Configure"
+        },
+        {
+            "label": "Build: hotel_test_all",
+            "type": "shell",
+            "command": "cmake",
+            "args": [
+                "--build",
+                "${workspaceFolder}/build",
+                "--target",
+                "hotel_test_all"
+            ],
+            "group": "build",
+            "problemMatcher": ["$gcc"],
+            "dependsOn": "CMake: Configure"
+        },
+        {
+            "label": "Run: All Tests",
+            "type": "shell",
+            "command": "cmake",
+            "args": [
+                "--build",
+                "${workspaceFolder}/build",
+                "--target",
+                "run_tests"
+            ],
+            "group": "test",
+            "problemMatcher": [],
+            "dependsOn": "CMake: Configure"
+        },
+        {
+            "label": "Clean",
+            "type": "shell",
+            "command": "rm",
+            "args": ["-rf", "${workspaceFolder}/build"],
+            "group": "build",
+            "problemMatcher": []
+        }
+    ]
+}

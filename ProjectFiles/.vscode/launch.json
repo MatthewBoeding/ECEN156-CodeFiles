@@ -1,0 +1,251 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Debug: hotel_test_week5",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/build/hotel_test_week5",
+            "args": [],
+            "stopAtEntry": true,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                },
+                {
+                    "description": "Set Disassembly Flavor to Intel",
+                    "text": "-gdb-set disassembly-flavor intel",
+                    "ignoreFailures": true
+                }
+            ],
+            "preLaunchTask": "Build: hotel_test_week5",
+            "miDebuggerPath": "/usr/bin/gdb"
+        },
+        {
+            "name": "Debug: hotel_test_week6",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/build/hotel_test_week6",
+            "args": [],
+            "stopAtEntry": true,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                },
+                {
+                    "description": "Set Disassembly Flavor to Intel",
+                    "text": "-gdb-set disassembly-flavor intel",
+                    "ignoreFailures": true
+                }
+            ],
+            "preLaunchTask": "Build: hotel_test_week6",
+            "miDebuggerPath": "/usr/bin/gdb"
+        },
+        {
+            "name": "Debug: hotel_test_all",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/build/hotel_test_all",
+            "args": [],
+            "stopAtEntry": true,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                },
+                {
+                    "description": "Set Disassembly Flavor to Intel",
+                    "text": "-gdb-set disassembly-flavor intel",
+                    "ignoreFailures": true
+                }
+            ],
+            "preLaunchTask": "Build: hotel_test_all",
+            "miDebuggerPath": "/usr/bin/gdb"
+        },
+        {
+            "name": "Debug: Person Tests Only",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/build/hotel_test_week5",
+            "args": ["--gtest_filter=PersonTest.*"],
+            "stopAtEntry": true,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ],
+            "preLaunchTask": "Build: hotel_test_week5",
+            "miDebuggerPath": "/usr/bin/gdb"
+        },
+        {
+            "name": "Debug: Guest Tests Only",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/build/hotel_test_week5",
+            "args": ["--gtest_filter=GuestTest.*"],
+            "stopAtEntry": true,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ],
+            "preLaunchTask": "Build: hotel_test_week5",
+            "miDebuggerPath": "/usr/bin/gdb"
+        },
+        {
+            "name": "Debug: Employee Tests Only",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/build/hotel_test_week5",
+            "args": ["--gtest_filter=EmployeeTest.*"],
+            "stopAtEntry": true,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ],
+            "preLaunchTask": "Build: hotel_test_week5",
+            "miDebuggerPath": "/usr/bin/gdb"
+        },
+        {
+            "name": "Debug: Room Tests Only",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/build/hotel_test_week6",
+            "args": ["--gtest_filter=*RoomTest.*:SuiteTest.*"],
+            "stopAtEntry": true,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ],
+            "preLaunchTask": "Build: hotel_test_week6",
+            "miDebuggerPath": "/usr/bin/gdb"
+        },
+        {
+            "name": "Debug: Payment Tests Only",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/build/hotel_test_week6",
+            "args": ["--gtest_filter=*PaymentTest.*"],
+            "stopAtEntry": true,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ],
+            "preLaunchTask": "Build: hotel_test_week6",
+            "miDebuggerPath": "/usr/bin/gdb"
+        },
+        {
+            "name": "Debug: Reservation Tests Only",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/build/hotel_test_week6",
+            "args": ["--gtest_filter=ReservationTest.*"],
+            "stopAtEntry": true,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ],
+            "preLaunchTask": "Build: hotel_test_week6",
+            "miDebuggerPath": "/usr/bin/gdb"
+        },
+        {
+            "name": "Debug: Hotel Tests Only",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/build/hotel_test_week6",
+            "args": ["--gtest_filter=HotelTest.*"],
+            "stopAtEntry": true,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ],
+            "preLaunchTask": "Build: hotel_test_week6",
+            "miDebuggerPath": "/usr/bin/gdb"
+        },
+        {
+            "name": "Debug: Polymorphism Tests Only",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/build/hotel_test_week6",
+            "args": ["--gtest_filter=PolymorphismTest.*"],
+            "stopAtEntry": true,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ],
+            "preLaunchTask": "Build: hotel_test_week6",
+            "miDebuggerPath": "/usr/bin/gdb"
+        }
+    ]
+}

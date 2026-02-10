@@ -580,7 +580,8 @@ TEST_F(GuestManagementTest, FindGuestsInPointsRangeFound) {
     Guest* result[5];
     // Points: 500, 1200, 300, 800, 1500
     int count = findGuestsInPointsRange(guests, 5, 400, 1000, result);
-    
+    EXPECT_EQ(result[0]->loyaltyPoints, 500);
+    EXPECT_EQ(result[1]->loyaltyPoints, 800);
     EXPECT_EQ(count, 2);  // 500 and 800 are in range
 }
 

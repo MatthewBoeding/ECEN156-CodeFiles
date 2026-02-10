@@ -72,7 +72,7 @@ bool addLoyaltyPoints(Guest guests[], int size, int guestId, int points) {
 }
 
 bool updateGuestContact(Guest* guest, const char* newPhone, const char* newEmail) {
-    // TODO: Update guest's phone and/or email
+    // TODO: step14_sorting_pointersUpdate guest's phone and/or email
     // IMPORTANT: First check if guest is nullptr!
     // If newPhone is not nullptr, copy it to guest->phone using strcpy
     // If newEmail is not nullptr, copy it to guest->email using strcpy
@@ -95,13 +95,16 @@ bool checkGuestIntoRoom(Room* room, Guest* guest) {
 }
 
 Guest* checkGuestOutOfRoom(Room* room) {
-    // TODO: Remove guest from room and return pointer to that guest
-    // Check that room is not nullptr
-    // Save the currentGuest pointer before clearing it
-    // Set room->currentGuest = nullptr
-    // Set the guest's isCheckedIn = false (if guest wasn't null)
-    // Return the saved guest pointer (or nullptr if room was vacant)
-    return nullptr;  // Replace this
+    Guest * tempGuest = nullptr; 
+    if(room != nullptr && room->currentGuest != nullptr)
+    {
+        //if(room->currentGuest != nullptr)
+        room->currentGuest->isCheckedIn = false;
+        tempGuest = room->currentGuest;
+        room->currentGuest = nullptr; 
+    }
+
+    return tempGuest;  // Replace this
 }
 
 Room* findGuestRoom(Room rooms[], int size, const Guest* guest) {
@@ -180,19 +183,32 @@ bool cancelReservation(Reservation* reservation) {
 // ----------------------------------------------------------------------------
 
 void swapGuestPointers(Guest** g1, Guest** g2) {
-    // TODO: Swap the two Guest pointers
-    // This uses double pointers (pointer to pointer)
-    // *g1 gives you the Guest* that g1 points to
-    // Save *g1 to temp, set *g1 = *g2, set *g2 = temp
-    // No return value needed
+    Guest * temp;
+    temp = *g1;
+    *g1 = *g2;
+    *g2 = temp;
 }
 
 void sortGuestsByLoyalty(Guest* guestPtrs[], int size) {
-    // TODO: Sort the array of guest pointers by loyaltyPoints (descending)
-    // Use bubble sort: compare adjacent elements, swap if out of order
-    // Access loyalty points: guestPtrs[i]->loyaltyPoints
-    // Swap using: swapGuestPointers(&guestPtrs[i], &guestPtrs[j])
-    // Descending means highest points first
+    //flag value: do we need to continue sorting?
+    bool isSorted = false;
+    //continue our sort until we are sorted
+    while(isSorted == false)
+    {
+        //assume we are sorted
+        isSorted = true; 
+        //run one iteration of our sort. 
+        for(int i=0; i<size-1; i++)
+        {
+            //compare adjacent guest's loyalty points
+            if(guestPtrs[i]->loyaltyPoints < guestPtrs[i+1]->loyaltyPoints)  
+            {
+                swapGuestPointers(&guestPtrs[i], &guestPtrs[i+1]);
+                isSorted = false;
+            }
+        }
+    }
+
 }
 
 int findGuestsInPointsRange(Guest guests[], int size, int minPoints,
@@ -200,5 +216,15 @@ int findGuestsInPointsRange(Guest guests[], int size, int minPoints,
     // TODO: Find all guests with loyaltyPoints between min and max (inclusive)
     // Store pointers to matching guests in result array
     // Return count of guests found
-    return 0;  // Replace this
+    int count = 0;
+    
+    for(int i = 0; i < size; i++)
+    {
+        if(guests[i].loyaltyPoints >= minPoints && guests[i].loyaltyPoints <= maxPoints)
+        {
+            result[count] = &guests[i]; //(guests+i)
+            count++;
+        }
+    }
+    return count;  // Replace this
 }

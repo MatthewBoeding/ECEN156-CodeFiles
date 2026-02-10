@@ -1,7 +1,8 @@
 .vscode/*
 **/build/*
 **/src/*_solution.cpp
-Week5
+**/*.html
+ProjectFiles/solution/*
 Week6
 Week7
 Week8

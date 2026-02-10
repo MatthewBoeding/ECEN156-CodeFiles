@@ -35,7 +35,8 @@ void step1_pointer_basics() {
     
     cout << "ptr holds the address: " << ptr << endl;
     cout << "The value AT that address: " << *ptr << endl;  // * = "dereference"
-    
+    Student* structure;
+    (*structure).gpa;
     cout << endl;
     
     // Think of it like this:
@@ -84,7 +85,11 @@ void step2_modify_through_pointer() {
 // It should double the value at the address ptr points to
 void doubleValue(int* ptr) {
     // Your code here - use * to access and modify the value
-    
+    //int temp = *ptr; 
+    //temp = temp * 2; 
+    //*ptr = temp; 
+
+    *ptr = *ptr * 2;
 }
 
 // Compare: pass by value (makes a copy, doesn't affect original)
@@ -119,16 +124,26 @@ void step3_pointer_parameters() {
 void swap(int* a, int* b) {
     // Your code here
     // Remember: *a is the value at address a
-    
+    int temp = *b; 
+    *b = *a; 
+    *a = temp;
 }
 
 // TODO: Implement safeDivide
 // Divide x by y, store result at resultPtr
 // Return false if y is zero OR if resultPtr is nullptr
 bool safeDivide(int x, int y, double* resultPtr) {
-    // Your code here
-    // ALWAYS check for nullptr before using a pointer!
-    
+    // Divide x by y, store in resultPtr
+    // Cannot divide by 0
+    // Make sure ptr is not nullptr
+    // return true if valid result
+
+    // if(!(y == 0 || resultPtr == nullptr))
+    if(y != 0 && resultPtr != nullptr)
+    {
+        *resultPtr = x / y;
+        return true;
+    }
     return false;
 }
 
@@ -212,7 +227,19 @@ void step5_arrays_and_pointers() {
 int* findValue(int arr[], int size, int target) {
     // Your code here
     // Hint: return &arr[i] when you find it
-    
+    for(int i =0; i<size; i++)
+    {
+        if(arr[i] == target){
+            return &arr[i];
+        }
+
+    }
+    for(int i = 0; i < size; i++)
+    {
+        if(*(arr + i) == target){
+            return (arr + i);
+        }
+    }
     return nullptr;
 }
 
@@ -221,15 +248,29 @@ int* findValue(int arr[], int size, int target) {
 int* findMax(int arr[], int size) {
     // Your code here
     // What should you return if size is 0?
-    
-    return nullptr;
+    // return nullptr
+    if(size == 0)
+    {
+        return nullptr; 
+    }
+    int currentMax = arr[0];
+    int* maxIndex = arr; //&arr[0] OR arr + i 
+    for(int i =1; i<size; i++)
+    {
+        if(currentMax < arr[i])
+        {
+            currentMax = arr[i];
+            maxIndex = &arr[i];   //(arr + i) 
+        }
+    }
+    return maxIndex;
 }
 
 void step6_returning_pointers() {
     cout << "=== STEP 6: Returning Pointers ===" << endl;
     
     int numbers[5] = {30, 10, 50, 20, 40};
-    
+    int* numbersPtr = numbers; 
     // Find a value
     int* found = findValue(numbers, 5, 50);
     if (found != nullptr) {
@@ -252,7 +293,12 @@ void step6_returning_pointers() {
     if (maxPtr != nullptr) {
         cout << "Max value: " << *maxPtr << endl;
     }
-    
+    maxPtr = findMax(numbers, 0);
+    if (maxPtr == nullptr)
+    {
+        cout << "Invalid Size" << endl;
+    }
+
     cout << endl;
 }
 
@@ -304,23 +350,54 @@ void step7_arrow_operator() {
 // ============================================================================
 // STEP 8: Struct pointers as parameters
 // ============================================================================
-
+/*
+    int id;
+    char name[50];
+    double gpa;
+    bool isEnrolled;
+    */
 // TODO: Implement displayStudent
 // Print student info using arrow operator
 // Handle nullptr case!
 void displayStudent(const Student* s) {
     // Your code here
     // Remember: ALWAYS check for nullptr first!
-    
+    if(s != nullptr)
+    {
+        cout << "Student: " << s->name << endl;
+        cout << "\t gpa: " << s->gpa << "\t Enrolled: " << s->isEnrolled << "\r\n";
+    }
+    return; 
 }
-
+/*
+    int id;
+    char name[50];
+    double gpa;
+    bool isEnrolled;
+    */
 // TODO: Implement giveBonus
-// Add bonus points to student's GPA (max 4.0)
+// if a valid pointer and the student is enrolled
+//      Add bonus points to student's GPA (max 4.0)
+//      and return true
 // Return false if student is nullptr or not enrolled
 bool giveBonus(Student* s, double bonus) {
     // Your code here
-    
-    return false;
+    //(*s.gpa)
+    // if(s!=nullptr && s->isEnrolled == true)
+    bool isValid = false;
+    if(s != nullptr)
+    {
+        if(s->isEnrolled == true)
+        {
+            s->gpa = s->gpa + bonus; 
+            if(s->gpa > 4)
+            {
+                s->gpa = 4.0;
+            }
+            isValid = true;
+        }
+    }
+    return isValid;
 }
 
 void step8_struct_pointer_params() {
@@ -337,7 +414,7 @@ void step8_struct_pointer_params() {
     
     // Give bonus to enrolled student
     cout << "\nGiving Alice a 0.3 bonus..." << endl;
-    if (giveBonus(&students[0], 0.3)) {
+    if (giveBonus(&students[0], 3.0)) {
         cout << "Success! New GPA: " << students[0].gpa << endl;
     }
     
@@ -363,7 +440,15 @@ void step8_struct_pointer_params() {
 // Return pointer to student if found, nullptr if not
 Student* findStudentById(Student students[], int size, int id) {
     // Your code here
-    
+    for(int i = 0; i<size; i++)
+    {
+        //students[i].id == id
+        Student currentStudent = students[i];
+        if(currentStudent.id == id)
+        {
+            return &(students[i]);   //students + i 
+        }
+    }
     return nullptr;
 }
 
@@ -371,9 +456,20 @@ Student* findStudentById(Student students[], int size, int id) {
 // Return pointer to student with highest GPA
 // Only consider enrolled students!
 Student* findTopStudent(Student students[], int size) {
-    // Your code here
-    
-    return nullptr;
+    Student temp = {00, "Temp", 0.0, false};
+    Student* currentStudent = &temp;   //students + i
+    for(int i = 0; i<size; i++)
+    {
+            if((currentStudent->gpa < (students+i)->gpa) && ((students+i)->isEnrolled))
+            {
+                currentStudent = (students+i);
+            }
+    }
+    if(currentStudent == &temp)
+    {
+        currentStudent = nullptr;
+    }
+    return currentStudent;
 }
 
 void step9_finding_structs() {
@@ -436,8 +532,14 @@ struct Enrollment {
 bool enrollStudent(Enrollment* enrollment, Student* student, Course* course) {
     // Your code here
     // Check ALL pointers before using!
-    
-    return false;
+    bool isValidEnrollment = false;
+    if(enrollment != nullptr && student != nullptr && course != nullptr)
+    {
+        enrollment->course = course;    //(*enrollment).course = course; 
+        (*enrollment).student = student;
+        isValidEnrollment =  true;
+    }
+    return isValidEnrollment;
 }
 
 void step10_connecting_structs() {
@@ -477,8 +579,17 @@ Enrollment* findEnrollmentByStudent(Enrollment enrollments[], int size,
                                      const Student* student) {
     // Your code here
     // Hint: compare enrollment[i].student == student
-    
-    return nullptr;
+    Enrollment* isEnrolled = nullptr; 
+    for(int i = 0; i<size; i++)
+    {
+        //if(enrollments[i].student == student ? enrollee = &enrollments[i] : enrollee = nullptr)
+        if(enrollments[i].student == student)
+        {
+            isEnrolled = &enrollments[i];
+            break;
+        }
+    }
+    return isEnrolled;
 }
 
 // TODO: Implement countEnrollmentsInCourse
@@ -486,8 +597,16 @@ Enrollment* findEnrollmentByStudent(Enrollment enrollments[], int size,
 int countEnrollmentsInCourse(const Enrollment enrollments[], int size, 
                               const Course* course) {
     // Your code here
-    
-    return 0;
+    int count = 0;
+    for(int i = 0; i < size; i++)
+    {
+        if(enrollments[i].course == course)
+        {
+            count++;
+        }
+    }
+
+    return count;
 }
 
 void step11_finding_relationships() {
@@ -505,9 +624,9 @@ void step11_finding_relationships() {
     
     // Set up some enrollments
     Enrollment enrollments[3] = {
-        {&students[0], &courses[0], 'A'},  // Alice in CS101
-        {&students[1], &courses[0], 'B'},  // Bob in CS101
-        {&students[0], &courses[1], 'A'}   // Alice in Math201
+        {students, &courses[0], 'A'},  // (students + i)  // Alice in CS101
+        {&students[1], (courses), 'B'},  // Bob in CS101
+        {&students[0], (courses + 1), 'A'}   // Alice in Math201
     };
     
     // Find Alice's first enrollment
@@ -515,7 +634,7 @@ void step11_finding_relationships() {
     if (aliceEnroll != nullptr) {
         cout << "Found Alice's enrollment in: " 
              << aliceEnroll->course->name << endl;
-    }
+    } //(*aliceEnroll).(*course).name
     
     // Count students in CS101
     int cs101Count = countEnrollmentsInCourse(enrollments, 3, &courses[0]);
@@ -530,12 +649,22 @@ void step11_finding_relationships() {
 
 // TODO: Implement getEnrolledStudents
 // Fill array with POINTERS to students who have isEnrolled == true
-// Return count of enrolled students
+// Return count of enrolled students Student * enrolled[] == Student ** enrolled
 int getEnrolledStudents(Student students[], int size, Student* enrolled[]) {
     // Your code here
-    // Store &students[i] in enrolled array when student is enrolled
-    
-    return 0;
+    // Store &students[i] in enrolled array when student is enrolled 
+    int count = 0;
+    for(int i = 0; i < size; i++)
+    {
+        if(students[i].isEnrolled)
+        {
+            enrolled[count] = &students[i]; //(students+i)
+            count++;
+        }
+    }
+    //access element within enrolled
+    //(*(*enrolled)).gpa = 
+    return count;
 }
 
 void step12_pointer_arrays() {
@@ -556,7 +685,7 @@ void step12_pointer_arrays() {
     cout << "Enrolled students (" << count << "):" << endl;
     for (int i = 0; i < count; i++) {
         cout << "  - " << enrolled[i]->name 
-             << " (GPA: " << enrolled[i]->gpa << ")" << endl;
+             << " (GPA: " << (*enrolled[i]).gpa << ")" << endl;
     }
     
     // We can modify through these pointers!
@@ -584,6 +713,9 @@ void swapStudentPointers(Student** p1, Student** p2) {
     // p1 is a pointer to a Student*
     // *p1 gives you the Student* itself
     
+    Student * temp2 = *p1;
+    *p1 = *p2;
+    *p2 = temp2;
 }
 
 void step13_double_pointers() {
@@ -612,7 +744,7 @@ void step13_double_pointers() {
 }
 
 // ============================================================================
-// STEP 14: Sorting an array of pointers
+// STEP 14: Sorting an array of fpointers
 // ============================================================================
 
 // TODO: Implement sortByGpaDescending
@@ -747,28 +879,28 @@ int main() {
     cout << "=================================" << endl << endl;
     
     // ---- PART A: POINTER FUNDAMENTALS ----
-    // step1_pointer_basics();
-    // step2_modify_through_pointer();
-    // step3_pointer_parameters();
-    // step4_multiple_and_null();
+    step1_pointer_basics();
+    step2_modify_through_pointer();
+    step3_pointer_parameters();
+    step4_multiple_and_null();
     
     // ---- PART B: POINTERS AND ARRAYS ----
-    // step5_arrays_and_pointers();
-    // step6_returning_pointers();
+    step5_arrays_and_pointers();
+    step6_returning_pointers();
     
     // ---- PART C: POINTERS AND STRUCTS ----
-    // step7_arrow_operator();
-    // step8_struct_pointer_params();
-    // step9_finding_structs();
+    step7_arrow_operator();
+    step8_struct_pointer_params();
+    step9_finding_structs();
     
     // ---- PART D: POINTERS AS STRUCT MEMBERS ----
-    // step10_connecting_structs();
-    // step11_finding_relationships();
-    // step12_pointer_arrays();
+    step10_connecting_structs();
+    step11_finding_relationships();
+    step12_pointer_arrays();
     
     // ---- PART E: ADVANCED TECHNIQUES ----
-    // step13_double_pointers();
-    // step14_sorting_pointers();
+    step13_double_pointers();
+    step14_sorting_pointers();
     
     // ---- PART F: COMPLETE SYSTEM ----
     // step15_complete_system();
