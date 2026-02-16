@@ -13,7 +13,7 @@
 // PERSON CLASS IMPLEMENTATION
 // ============================================================================
 
-Person::Person() {
+Person::Person() : id(0), name("\0"), phone("\0"), email("\0") {
     // TODO: Initialize all member variables to default values
     // - id should be 0
     // - name, phone, email should be empty strings (use strcpy)
