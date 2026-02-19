@@ -13,4 +13,4 @@ set(CMAKE_BUILD_TYPE Debug)
 set(SRC_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src)
 
 # Create test executable
-add_executable(classes_son ${SRC_DIR}/week5_classes_followalong.cpp)
+add_executable(classes_son ${SRC_DIR}/pet_classes.cpp ${SRC_DIR}/cat_class.cpp)

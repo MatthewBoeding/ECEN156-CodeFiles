@@ -1,5 +1,6 @@
 #include <iostream>
 #include <cstring>
+#include "pet_class.h"
 using namespace std;
 
 
@@ -10,16 +11,14 @@ using namespace std;
 // double weight; 
 #include <cstring>
 
-class Cat{
+class Cat : public Pet{
     private:
         char furColor[12]; 
-        char name[50];
-        int age; 
         double weight; 
 
     public:
         Cat();    //default constructor
-        Cat(char * furColor, char * name, int age, double weight);
+        Cat(char * furColor, double weight, char* name, bool canTalk, char* species, char* ownerName, int age);
         //destructor
         ~Cat();
 
@@ -30,18 +29,16 @@ class Cat{
 };
 
 /* Constructors are done. yay! Never touch these again!*/
-Cat::Cat() : furColor(""), name(""), age(0), weight(0)
+Cat::Cat() : furColor(""), weight(0), Pet::Pet()
 {
     cout << "Default constructor for Cat has been called;" << endl;
 }
-Cat::Cat(char * furColor, char * name, int age, double weight)
-: age(age), weight(weight)
+Cat::Cat(char * furColor, double weight, char* name, bool canTalk, char* species, char* ownerName, int age)
+: Pet::Pet(name, canTalk, species, ownerName, age)
 {
-    this->age = age;
     this->weight = weight;
     strncpy(this->furColor, furColor, 12);
     //TODO FIX the final character being \0
-    strncpy(this->name, name, 50);
     cout << "Parameterized Constructor called" << endl;
 }
 //Destructor?
@@ -61,7 +58,7 @@ double Cat::getWeight()
 }
 
 int main(){
-        Cat frodo("Orange", "Frodo", 7, 45);
+        Cat frodo("Orange", 45, "Frodo", true, "Komodo Dragon", "Grace", 55);
         double startWeight = frodo.getWeight();
         cout << "Frodo needs to lose weight: " <<startWeight << endl;
         frodo.setWeight(35);
