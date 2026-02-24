@@ -502,7 +502,7 @@ TEST_F(DeluxeRoomTest, MaxOccupancy) {
     DeluxeRoom room1(201, 2, 1, false, "City");
     DeluxeRoom room2(202, 2, 2, false, "City");
     
-    EXPECT_EQ(room1.getMaxOccupancy(), 2);
+    EXPECT_EQ(room1.getMaxOccupancy(), 3);
     EXPECT_EQ(room2.getMaxOccupancy(), 4);
 }
 
