@@ -6,7 +6,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # Define directory paths
 set(HEADER_DIR ${CMAKE_CURRENT_SOURCE_DIR}/headers)
-set(SRC_DIR ${CMAKE_CURRENT_SOURCE_DIR}/solution)
+set(SRC_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src)
 set(TEST_DIR ${CMAKE_CURRENT_SOURCE_DIR}/tests)
 
 # Find GoogleTest
