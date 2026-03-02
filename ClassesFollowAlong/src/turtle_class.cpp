@@ -20,7 +20,7 @@ class Turtle{
         void setWeight(double weight) {this->weight = weight;}
         void setDoesBite(bool doesBite) {this->doesBite = doesBite;}
 
-        virtual void displayFunFact() const = 0;
+        virtual void displayFunFact() const;
 
     private:
         int age;
@@ -38,6 +38,10 @@ Turtle::Turtle(int age, char * shell, double weight, bool doesBite)
     strcpy(this->shell, shell);
     this->weight = weight;
     this->doesBite = doesBite;   
+}
+
+void Turtle::displayFunFact() const {
+    std::cout << "Turtles are Cute \n";
 }
 
 class PaintedTurtle : public Turtle{
@@ -81,8 +85,38 @@ void PaintedTurtle::displayFunFact() const {
     std::cout << "Painted Turtles are Cute \n" << "Painted Turtles are not acutally painted\n";
 }
 
+class SnappingTurtle : public Turtle{
+    private:
+        char attitude[20];
+    public:
+        SnappingTurtle();
+        SnappingTurtle(char * attitude, int age, char * shell, double weight, bool doesBite);
+
+        virtual ~SnappingTurtle() {}
+
+        char * getAttitude() {return attitude;}
+
+        void setAttitude(char * attitude) {strcpy(this->attitude,attitude); }
+        void displayFunFact() const override;
+};
+
+SnappingTurtle::SnappingTurtle() : Turtle(), attitude("Spicy")
+{}
+
+SnappingTurtle::SnappingTurtle(char * attitude, int age, char * shell, \
+    double weight, bool doesBite) : Turtle(age, shell, weight, doesBite)
+    {
+        strcpy(this->attitude, attitude);
+    }
+void SnappingTurtle::displayFunFact() const{
+    std::cout << "Snapping Turtles are Ugly and They like to bite.\n";
+}
 int main()
 {
     PaintedTurtle yurtle("Orange", "Stripes", 2, "Square", 2, true);
     bool biter = yurtle.getDoesBite();
+    SnappingTurtle turyle("Happy", 2, "Round", 5, true);
+    yurtle.displayFunFact();
+    bool biter2 = turyle.getDoesBite();
+    turyle.displayFunFact();
 }

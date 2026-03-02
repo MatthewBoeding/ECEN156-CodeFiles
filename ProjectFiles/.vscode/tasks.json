@@ -58,6 +58,20 @@
             "dependsOn": "CMake: Configure"
         },
         {
+            "label": "Build: linked_list_test",
+            "type": "shell",
+            "command": "cmake",
+            "args": [
+                "--build",
+                "${workspaceFolder}/build",
+                "--target",
+                "linked_list_test"
+            ],
+            "group": "build",
+            "problemMatcher": ["$gcc"],
+            "dependsOn": "CMake: Configure"
+        },
+        {
             "label": "Run: All Tests",
             "type": "shell",
             "command": "cmake",

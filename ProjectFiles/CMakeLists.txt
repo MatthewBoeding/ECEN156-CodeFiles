@@ -6,7 +6,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # Define directory paths
 set(HEADER_DIR ${CMAKE_CURRENT_SOURCE_DIR}/headers)
-set(SRC_DIR ${CMAKE_CURRENT_SOURCE_DIR}/solution)
+set(SRC_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src)
 set(TEST_DIR ${CMAKE_CURRENT_SOURCE_DIR}/tests)
 
 # Find GoogleTest
@@ -32,10 +32,14 @@ set(SYSTEM_SOURCES
     ${SRC_DIR}/system_classes.cpp
 )
 
+set(LIST_SOURCES
+    ${SRC_DIR}/reservation_list.cpp)
+
 set(ALL_SOURCES
     ${BASE_SOURCES}
     ${HOTEL_SOURCES}
     ${SYSTEM_SOURCES}
+    ${LIST_SOURCES}
 )
 
 # ============================================================================
@@ -109,148 +113,18 @@ target_link_libraries(hotel_test_all
 )
 
 # ============================================================================
-# Custom target to run all tests
+# Week 8 Test Executable - Linked Lists!
+# Just making a reservation linked list
 # ============================================================================
-add_custom_target(run_tests
-    COMMAND hotel_test_week5
-    COMMAND hotel_test_week6
-    COMMAND hotel_test_week7
-    DEPENDS hotel_test_week5 hotel_test_week6 hotel_test_week7
-    COMMENT "Running all Hotel Management tests..."
+add_executable(linked_list_test
+    ${ALL_SOURCES}
+    ${TEST_DIR}/reservation_list_test.cpp
 )
 
-# ============================================================================
-# WEEK 5 - Base Classes Test Targets
-# ============================================================================
+target_include_directories(linked_list_test PUBLIC ${HEADER_DIR})
 
-add_custom_target(test_person
-    COMMAND hotel_test_week5 --gtest_filter=PersonTest.* 
-    DEPENDS hotel_test_week5
-    COMMENT "Running Person base class tests..."
+target_link_libraries(linked_list_test
+    ${GTEST_LIBRARIES}
+    ${GTEST_MAIN_LIBRARIES}
+    Threads::Threads
 )
-
-add_custom_target(test_room_base
-    COMMAND hotel_test_week5 --gtest_filter=RoomBaseTest.*
-    DEPENDS hotel_test_week5
-    COMMENT "Running Room base class tests..."
-)
-
-add_custom_target(test_payment_base
-    COMMAND hotel_test_week5 --gtest_filter=PaymentBaseTest.*
-    DEPENDS hotel_test_week5
-    COMMENT "Running Payment base class tests..."
-)
-
-# ============================================================================
-# WEEK 6 - Derived Classes & Inheritance Test Targets
-# ============================================================================
-
-add_custom_target(test_guest
-    COMMAND hotel_test_week6 --gtest_filter=GuestTest.*
-    DEPENDS hotel_test_week6
-    COMMENT "Running Guest class tests..."
-)
-
-add_custom_target(test_employee
-    COMMAND hotel_test_week6 --gtest_filter=EmployeeTest.*
-    DEPENDS hotel_test_week6
-    COMMENT "Running Employee class tests..."
-)
-
-add_custom_target(test_standard_room
-    COMMAND hotel_test_week6 --gtest_filter=StandardRoomTest.*
-    DEPENDS hotel_test_week6
-    COMMENT "Running StandardRoom tests..."
-)
-
-add_custom_target(test_deluxe_room
-    COMMAND hotel_test_week6 --gtest_filter=DeluxeRoomTest.*
-    DEPENDS hotel_test_week6
-    COMMENT "Running DeluxeRoom tests..."
-)
-
-add_custom_target(test_suite
-    COMMAND hotel_test_week6 --gtest_filter=SuiteTest.*
-    DEPENDS hotel_test_week6
-    COMMENT "Running Suite tests..."
-)
-
-add_custom_target(test_cash_payment
-    COMMAND hotel_test_week6 --gtest_filter=CashPaymentTest.*
-    DEPENDS hotel_test_week6
-    COMMENT "Running CashPayment tests..."
-)
-
-add_custom_target(test_credit_payment
-    COMMAND hotel_test_week6 --gtest_filter=CreditCardPaymentTest.*
-    DEPENDS hotel_test_week6
-    COMMENT "Running CreditCardPayment tests..."
-)
-
-add_custom_target(test_loyalty_payment
-    COMMAND hotel_test_week6 --gtest_filter=LoyaltyPointsPaymentTest.*
-    DEPENDS hotel_test_week6
-    COMMENT "Running LoyaltyPointsPayment tests..."
-)
-
-add_custom_target(test_inheritance
-    COMMAND hotel_test_week6 --gtest_filter=InheritanceTest.*
-    DEPENDS hotel_test_week6
-    COMMENT "Running Inheritance concept tests..."
-)
-
-# ============================================================================
-# WEEK 7 - Polymorphism & System Integration Test Targets
-# ============================================================================
-
-add_custom_target(test_reservation
-    COMMAND hotel_test_week7 --gtest_filter=ReservationTest.*
-    DEPENDS hotel_test_week7
-    COMMENT "Running Reservation tests..."
-)
-
-add_custom_target(test_hotel
-    COMMAND hotel_test_week7 --gtest_filter=HotelTest.*
-    DEPENDS hotel_test_week7
-    COMMENT "Running Hotel class tests..."
-)
-
-add_custom_target(test_polymorphism
-    COMMAND hotel_test_week7 --gtest_filter=PolymorphismTest.*
-    DEPENDS hotel_test_week7
-    COMMENT "Running Polymorphism tests..."
-)
-
-add_custom_target(test_integration
-    COMMAND hotel_test_week7 --gtest_filter=IntegrationTest.*
-    DEPENDS hotel_test_week7
-    COMMENT "Running System Integration tests..."
-)
-
-# ============================================================================
-# Convenience targets to run tests by week
-# ============================================================================
-
-add_custom_target(test_week5
-    COMMAND hotel_test_week5
-    DEPENDS hotel_test_week5
-    COMMENT "Running Week 5 tests (Base Classes: Person, Room, Payment)..."
-)
-
-add_custom_target(test_week6
-    COMMAND hotel_test_week6
-    DEPENDS hotel_test_week6
-    COMMENT "Running Week 6 tests (Derived Classes & Inheritance)..."
-)
-
-add_custom_target(test_week7
-    COMMAND hotel_test_week7
-    DEPENDS hotel_test_week7
-    COMMENT "Running Week 7 tests (Polymorphism & System Integration)..."
-)
-
-# ============================================================================
-# Installation (outputs to build directory)
-# ============================================================================
-install(TARGETS hotel_test_week5 hotel_test_week6 hotel_test_week7 
-        DESTINATION ${CMAKE_BINARY_DIR})
