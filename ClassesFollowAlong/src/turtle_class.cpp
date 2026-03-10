@@ -111,6 +111,43 @@ SnappingTurtle::SnappingTurtle(char * attitude, int age, char * shell, \
 void SnappingTurtle::displayFunFact() const{
     std::cout << "Snapping Turtles are Ugly and They like to bite.\n";
 }
+
+struct TurtleNode{
+    Turtle * data;     //Polymorphic pointers
+    TurtleNode * next;
+};
+
+class TurtleList{
+    private:
+        TurtleNode * head;
+        TurtleNode * tail;
+
+    public:
+        TurtleList();
+        TurtleList(TurtleNode * head, TurtleNode * tail);
+
+        ~TurtleList();
+
+        bool deleteAtIndex(int i);
+        bool deleteWithValue(char * name);
+
+        bool insertAtIndex(int i, TurtleNode * node);
+        bool appendToTail(TurtleNode * node);
+        bool appendAtHead(TurtleNode * node);
+
+};
+
+TurtleList::TurtleList() : head(nullptr), tail(nullptr) {}
+
+TurtleList::TurtleList(TurtleNode * head, TurtleNode * tail)
+: head(head), tail(tail) {
+    this->head->next = this->tail;
+    if(tail != nullptr)
+    {
+        this->tail->next = nullptr;
+    }
+}
+
 int main()
 {
     PaintedTurtle yurtle("Orange", "Stripes", 2, "Square", 2, true);

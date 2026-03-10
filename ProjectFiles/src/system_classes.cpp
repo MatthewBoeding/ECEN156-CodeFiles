@@ -227,7 +227,7 @@ Room* Hotel::findCheapestAvailable() const {
     // TODO: This demonstrates polymorphism!
     // Loop through rooms, find vacant room with lowest getBasePrice()
     // getBasePrice() is a virtual function - calls correct version!
-    return nullptr;
+
 }
 
 int Hotel::getRoomsNeedingCleaning(Room* result[], int maxSize) const {
