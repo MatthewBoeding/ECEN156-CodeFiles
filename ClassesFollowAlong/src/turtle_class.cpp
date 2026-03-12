@@ -113,7 +113,7 @@ void SnappingTurtle::displayFunFact() const{
 }
 
 struct TurtleNode{
-    Turtle * data;     //Polymorphic pointers
+    Turtle * turtle;     //Polymorphic pointers
     TurtleNode * next;
 };
 
@@ -133,9 +133,74 @@ class TurtleList{
 
         bool insertAtIndex(int i, TurtleNode * node);
         bool appendToTail(TurtleNode * node);
-        bool appendAtHead(TurtleNode * node);
+        bool prepend(TurtleNode * node);
 
 };
+
+bool TurtleList::prepend(TurtleNode * node)
+{
+    bool success = false;
+    //make this node our head node;
+    TurtleNode * temp = head;
+    if(node != nullptr)
+    {
+        success = true;
+        //updated our head node
+        head = node;
+        //Re-link the linked list
+        head->next = temp;
+        if(tail == nullptr)
+        {
+            tail = temp;
+        }
+    }
+    return success;
+}
+/* 
+*
+*
+*/
+bool TurtleList::appendToTail(TurtleNode * node)
+{
+    bool success = false;
+    TurtleNode * temp = tail;
+    if(node != nullptr)
+    {
+        tail = node;
+        tail->next = nullptr;
+        temp->next = tail;
+        success = true;
+    }
+    return success;
+}
+
+bool TurtleList::insertAtIndex(int i, TurtleNode * node)
+{
+    bool success = false;
+    TurtleNode * temp = head;       //current
+    if(node != nullptr)
+    {
+        for(int j = 0; j < i; j++)
+        {
+            if(temp->next == nullptr)
+            {
+                break;
+            }
+            if(j == i-1)
+            {
+                node->next = temp->next;
+                temp->next = node;
+                success = true;
+            }
+            else
+            {
+                temp = temp->next;
+            }
+        }
+    }
+    return success;
+}
+
 
 TurtleList::TurtleList() : head(nullptr), tail(nullptr) {}
 
@@ -147,6 +212,24 @@ TurtleList::TurtleList(TurtleNode * head, TurtleNode * tail)
         this->tail->next = nullptr;
     }
 }
+
+TurtleList::~TurtleList()
+{
+    //We need to Delete
+    // 1. all nodes
+    // 2. all classes within the nodes
+    TurtleNode * mrTemp = nullptr;      //current
+    TurtleNode * mrsTemp;
+    mrTemp = head;
+    while(mrTemp != nullptr)
+    {
+        mrsTemp = mrTemp->next;   //next
+        delete mrTemp->turtle;
+        delete mrTemp;
+        mrTemp = mrsTemp;
+    }
+}
+
 
 int main()
 {
