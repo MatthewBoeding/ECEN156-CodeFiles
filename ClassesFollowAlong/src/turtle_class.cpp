@@ -137,6 +137,34 @@ class TurtleList{
 
 };
 
+bool TurtleList::deleteAtIndex(int i)
+{
+    bool success = false;
+    TurtleNode * temp = head;
+    if(temp != nullptr)         //We only do this if head != null
+    {
+        for(int j = 0; j<i; j++)    //Traverse through the list
+        {
+            if(temp->next == nullptr)   //Break if at the end
+            {
+                break;
+            }
+            if(j == i-1)    
+            {            //deletion condition
+                TurtleNode * john = temp->next;
+                temp->next = john->next; // now i-1 is pointing to i+1
+                delete john;
+                success = true;
+            }
+            else
+            {
+                temp = temp->next;
+            }
+        }
+    }
+    return success;
+}
+
 bool TurtleList::prepend(TurtleNode * node)
 {
     bool success = false;
@@ -167,8 +195,15 @@ bool TurtleList::appendToTail(TurtleNode * node)
     if(node != nullptr)
     {
         tail = node;
-        tail->next = nullptr;
-        temp->next = tail;
+        if(temp != nullptr)
+        {
+            tail->next = nullptr;
+            temp->next = tail;
+        }
+        else
+        {
+            head->next = tail;
+        }
         success = true;
     }
     return success;
@@ -233,10 +268,23 @@ TurtleList::~TurtleList()
 
 int main()
 {
-    PaintedTurtle yurtle("Orange", "Stripes", 2, "Square", 2, true);
-    bool biter = yurtle.getDoesBite();
-    SnappingTurtle turyle("Happy", 2, "Round", 5, true);
-    yurtle.displayFunFact();
-    bool biter2 = turyle.getDoesBite();
-    turyle.displayFunFact();
+    PaintedTurtle * yurtle = new PaintedTurtle("Orange", "Stripes", 2, "Square", 2, true);
+    bool biter = yurtle->getDoesBite();
+    SnappingTurtle * turyle = new SnappingTurtle("Happy", 2, "Round", 5, true);
+    yurtle->displayFunFact();
+    bool biter2 = turyle->getDoesBite();
+    turyle->displayFunFact();
+    TurtleList * listOfTurtles = new TurtleList();
+
+    TurtleNode * yurtleNode = new TurtleNode;
+    yurtleNode->turtle = yurtle;
+    yurtleNode->next = nullptr;
+    listOfTurtles->prepend(yurtleNode);
+
+    TurtleNode * tim = new TurtleNode;
+    tim->turtle = turyle; 
+    tim->next = nullptr;
+    listOfTurtles->appendToTail(tim);
+
+
 }

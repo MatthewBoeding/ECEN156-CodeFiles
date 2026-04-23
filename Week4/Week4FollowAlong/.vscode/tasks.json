@@ -23,6 +23,8 @@
             "args": [
                 "--build",
                 "${workspaceFolder}/build",
+                "--target",
+                "ClassProject",
                 "--config",
                 "Debug"
             ],

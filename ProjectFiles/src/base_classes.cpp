@@ -4,63 +4,64 @@
 #include <ctime>
 
 // ============================================================================
-//  NAME:
-//  ASSIGNMENT: Hotel Management System - Week 6: Derived Classes
-//  DATE:
+// ASSIGNMENT: Hotel Management System - Basic Classes
+// Week: V
+// NAME: Gavin W Bowen
+// COURSE: ECEN 156
+// DATE:  2026/02/17
 // ============================================================================
 
 // ============================================================================
 // PERSON CLASS IMPLEMENTATION
 // ============================================================================
 
-Person::Person() : id(0), name("\0"), phone("\0"), email("\0") {
-    // TODO: Initialize all member variables to default values
-    // - id should be 0
-    // - name, phone, email should be empty strings (use strcpy)
+Person::Person(){
+    id = 0;
+    strcpy(name, "");
+    strcpy(phone, "");
+    strcpy(email, "");
 }
 
 Person::Person(int id, const char* name, const char* phone, const char* email) {
-    // TODO: Initialize all member variables with the provided parameters
-    // - Use 'this->' to distinguish between parameters and member variables
-    // - Use strcpy() to copy C-strings
+    this->id = id;
+    strcpy(this->name, name);
+    strcpy(this->phone, phone);
+    strcpy(this->email, email);
 }
 
 Person::~Person() {
-    // Virtual destructor - no dynamic memory to free
 }
 
 int Person::getId() const {
-    // TODO: Return the person's id
+    return id;
 }
 
 const char* Person::getName() const {
-    // TODO: Return the person's name
+    return name;
 }
 
 const char* Person::getPhone() const {
-    // TODO: Return the person's phone number
+    return phone;
 }
 
 const char* Person::getEmail() const {
-    // TODO: Return the person's email
+    return email;
 }
 
 void Person::setName(const char* name) {
-    // TODO: Copy the provided name to this->name using strcpy
+    strcpy(this->name, name);
 }
 
 void Person::setPhone(const char* phone) {
-    // TODO: Copy the provided phone to this->phone using strcpy
+    strcpy(this->phone, phone);
 }
 
 void Person::setEmail(const char* email) {
-    // TODO: Copy the provided email to this->email using strcpy
+    strcpy(this->email, email);
 }
 
 void Person::display() const {
-    // TODO: Display person information in the following format:
-    // "ID: [id] | Name: [name] | Phone: [phone] | Email: [email]"
-    // Note: Do not add endl at the end
+    cout <<"ID: "<<this->id<<" | Name: "<<this->name<<" | Phone: "<<this->phone<<" | Email: "<<this->email;
 }
 
 // ============================================================================
@@ -68,64 +69,56 @@ void Person::display() const {
 // ============================================================================
 
 Room::Room() {
-    // TODO: Initialize all member variables to default values
-    // - roomNumber should be 0
-    // - floor should be 1
-    // - isClean should be true
-    // - isUnderMaintenance should be false
+    roomNumber = 0;
+    floor = 1;
+    isClean = true;
+    isUnderMaintenance = false;
 }
 
 Room::Room(int roomNumber, int floor) {
-    // TODO: Initialize member variables
-    // - Set roomNumber and floor from parameters
-    // - Set isClean to true
-    // - Set isUnderMaintenance to false
+    this->roomNumber = roomNumber;
+    this->floor = roomNumber;
+    isClean = true;
+    isUnderMaintenance = false;
 }
 
 Room::~Room() {
-    // Virtual destructor - no dynamic memory to free in base class
 }
 
 int Room::getRoomNumber() const {
-    // TODO: Return the room number
+    return roomNumber;
 }
 
 int Room::getFloor() const {
-    // TODO: Return the floor number
+    return floor;
 }
 
 bool Room::getIsClean() const {
-    // TODO: Return whether the room is clean
+    return isClean;
 }
 
 bool Room::getIsUnderMaintenance() const {
-    // TODO: Return whether the room is under maintenance
+    return isUnderMaintenance;
 }
 
 void Room::setClean(bool clean) {
-    // TODO: Set the isClean member variable
-}
+    this->isClean = isClean;}
 
 void Room::setUnderMaintenance(bool maintenance) {
-    // TODO: Set the isUnderMaintenance member variable
+    this->isUnderMaintenance = isUnderMaintenance;
 }
 
 double Room::calculatePrice(int nights) const {
-    // TODO: Calculate and return the total price for the given number of nights
-    // Hint: Use getBasePrice() * nights
+    double calPri = 0.0;
+    calPri = getBasePrice() * nights;
+    return calPri;
 }
 
 void Room::display() const {
-    // TODO: Display room information in the following format:
-    // Line 1: "Room [roomNumber] (Floor [floor]) - [getRoomType()]"
-    // Line 2: "  Status: [Vacant/Occupied] | Clean: [Yes/No] | Maintenance: [Yes/No]"
-    // Line 3: "  Price: $[getBasePrice()]/night | Max Occupancy: [getMaxOccupancy()]"
-    // Line 4: "  Amenities: [getAmenities()]"
-    // 
-    // Hints:
-    // - Use isVacant() to check if room is vacant
-    // - Use fixed and setprecision(2) for price formatting
-    // - Use ternary operator (condition ? "Yes" : "No") for boolean displays
+    cout <<"Room "<<this->roomNumber<<" (Floor "<<this->floor<<") "<<getRoomType()<<endl;
+    cout <<"\tStatus: "<<isVacant()<<" | Clean: "<<this->isClean<<" | Maintenance: "<<this->isUnderMaintenance<<endl;
+    cout <<"\tPrice: $"<<getBasePrice()<<"/night | Max Occupancy: "<<getMaxOccupancy()<<endl;
+    cout <<"\tAmenities: "<<getAmenities()<<endl;
 }
 
 // ============================================================================
@@ -133,42 +126,38 @@ void Room::display() const {
 // ============================================================================
 
 Payment::Payment() {
-    // TODO: Initialize all member variables to default values
-    // - paymentId should be 0
-    // - amount should be 0.0
-    // - isProcessed should be false
-    // - timestamp should be "Not Set" (use strcpy)
+    paymentId = 0;
+    amount = 0.0;
+    isProcessed = false;
+    strcpy(timestamp, "");
 }
 
 Payment::Payment(int paymentId, double amount) {
-    // TODO: Initialize member variables
-    // - Set paymentId and amount from parameters
-    // - Set isProcessed to false
-    // - Set timestamp to current time using the following code:
-    //   time_t now = time(0);
-    //   strftime(timestamp, sizeof(timestamp), "%Y-%m-%d %H:%M", localtime(&now));
+    this->paymentId = paymentId;
+    this->amount = amount;
+    this->isProcessed = false;
+    strcpy(this->timestamp, timestamp);
 }
 
 Payment::~Payment() {
-    // Virtual destructor
 }
 
 int Payment::getPaymentId() const {
-    // TODO: Return the payment ID
+    return paymentId;
 }
 
 double Payment::getAmount() const {
-    // TODO: Return the payment amount
+    return amount;
 }
 
 bool Payment::getIsProcessed() const {
-    // TODO: Return whether the payment has been processed
+    return isProcessed;
 }
 
 const char* Payment::getTimestamp() const {
-    // TODO: Return the timestamp
+    return timestamp;
 }
 
 double Payment::getTransactionFee() const {
-    // TODO: Return the default transaction fee (0.0)
+    return 0.0;
 }

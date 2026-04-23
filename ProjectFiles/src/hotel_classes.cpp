@@ -3,66 +3,111 @@
 #include <iomanip>
 
 // ============================================================================
-//  NAME:
-//  ASSIGNMENT: Hotel Management System - Week 6: Derived Classes
-//  DATE:
+// ASSIGNMENT: Hotel Management System - Derived Classes
+// Week: VI
+// NAME: Gavin W Bowen
+// COURSE: ECEN 156
+// DATE:  2026/02/24
 // ============================================================================
 
 // ============================================================================
 // GUEST CLASS IMPLEMENTATION
 // ============================================================================
 
-Guest::Guest() : Person() {
-    // TODO: Initialize Guest-specific members
-    // loyaltyPoints = 0, isCheckedIn = false, totalStays = 0
+Guest::Guest() : Person() {// Initialize Guest-specific members
+    loyaltyPoints = 0;
+    isCheckedIn = false;
+    totalStays = 0;
 }
 
 Guest::Guest(int id, const char* name, const char* phone, const char* email, int loyaltyPoints)
-    : Person(id, name, phone, email) {
-    // TODO: Initialize Guest-specific members
-    // Use the provided loyaltyPoints, isCheckedIn = false, totalStays = 0
+    : Person(id, name, phone, email) {// Initialize Guest-specific members
+    this->loyaltyPoints = loyaltyPoints;
+    this->isCheckedIn = false;
+    this->totalStays = 0;
 }
 
 int Guest::getLoyaltyPoints() const {
-    return 0;  // TODO
+    return this->loyaltyPoints;
 }
 
 bool Guest::getIsCheckedIn() const {
-    return false;  // TODO
+    return this->isCheckedIn;
 }
 
 int Guest::getTotalStays() const {
-    return 0;  // TODO
+    return this->totalStays;
 }
 
 void Guest::setCheckedIn(bool status) {
-    // TODO
+    this->isCheckedIn = status;
 }
 
 void Guest::addLoyaltyPoints(int points) {
-    // TODO: Add points to loyalty balance (only if points > 0)
+    if(points>0)
+    {
+        this->loyaltyPoints=this->loyaltyPoints+points;
+    }
 }
 
-bool Guest::redeemPoints(int points) {
-    // TODO: Redeem points if guest has enough
-    // Return true if successful, false if not enough points or invalid amount
-    return false;
+bool Guest::redeemPoints(int points) {// Redeem points if guest has enough
+    bool redeem = false;
+    if(points>0 && this->loyaltyPoints>=points)
+    {
+        this->loyaltyPoints = this->loyaltyPoints - points;
+        redeem = true;
+    }
+    if(points<=0)
+    {
+        redeem = false;
+    }
+    return redeem;
 }
 
-const char* Guest::getLoyaltyTier() const {
-    // TODO: Return tier based on points
-    // Bronze: 0-999, Silver: 1000-4999, Gold: 5000-9999, Platinum: 10000+
-    return "Bronze";
+const char* Guest::getLoyaltyTier() const {// Return tier based on points
+    if(loyaltyPoints>=0 && loyaltyPoints<= 999)
+    {
+        return "Bronze";
+    }
+    if(loyaltyPoints>=1000 && loyaltyPoints<= 4999)
+    {
+        return "Silver";
+    }
+    if(loyaltyPoints>=5000 && loyaltyPoints<= 9999)
+    {
+        return "Gold";
+    }
+    if(loyaltyPoints>=10000)
+    {
+        return "Platinum";
+    }
+    
+    return nullptr;
 }
 
-double Guest::getTierDiscount() const {
-    // TODO: Return discount based on tier
-    // Bronze: 0%, Silver: 5%, Gold: 10%, Platinum: 15%
-    return 0.0;
+double Guest::getTierDiscount() const {// Return discount based on tier
+if(loyaltyPoints>=0 && loyaltyPoints<= 999)
+    {
+        return 0.0;
+    }
+    if(loyaltyPoints>=1000 && loyaltyPoints<= 4999)
+    {
+        return 0.05;
+    }
+    if(loyaltyPoints>=5000 && loyaltyPoints<= 9999)
+    {
+        return 0.10;
+    }
+    if(loyaltyPoints>=10000)
+    {
+        return 0.15;
+    }
+
+    return 0;
 }
 
 void Guest::recordStay() {
-    // TODO: Increment totalStays
+    this->totalStays+=1;
 }
 
 void Guest::display() const {
@@ -74,50 +119,66 @@ void Guest::display() const {
 // EMPLOYEE CLASS IMPLEMENTATION
 // ============================================================================
 
-Employee::Employee() : Person() {
-    // TODO: Initialize with defaults
-    // Empty position, hourlyWage = 0.0, hoursWorked = 0
+Employee::Employee() : Person() {// Initialize with defaults
+    strcpy(position, "");
+    hourlyWage = 0.0;
+    hoursWorked = 0;
+    
 }
 
 Employee::Employee(int id, const char* name, const char* phone, const char* email,
-                   const char* position, double hourlyWage)
+                   const char* position, double hourlyWage)// Initialize Employee-specific members
     : Person(id, name, phone, email) {
-    // TODO: Initialize Employee-specific members
+        strcpy(this->position, position);
+        this->hourlyWage = hourlyWage;
+        this->hoursWorked = 0.0;
 }
 
 const char* Employee::getPosition() const {
-    return "";  // TODO
+    return position;
 }
 
 double Employee::getHourlyWage() const {
-    return 0.0;  // TODO
+    return hourlyWage;
 }
 
 int Employee::getHoursWorked() const {
-    return 0;  // TODO
+    return hoursWorked;
 }
 
 void Employee::setPosition(const char* position) {
-    // TODO
+    strcpy(this->position, position);
 }
 
 void Employee::setHourlyWage(double wage) {
-    // TODO: Only set if wage > 0
+    if(this->hourlyWage>0 && wage>0)
+    {
+        this->hourlyWage=wage;
+    }
 }
 
 void Employee::addHoursWorked(int hours) {
-    // TODO: Only add if hours > 0
+    if(hours>0)
+    {
+        this->hoursWorked=this->hoursWorked + hours;
+    }
 }
 
-double Employee::calculatePay() const {
-    // TODO: Calculate pay with overtime
-    // Regular pay for hours <= 40
-    // Overtime (1.5x) for hours > 40
-    return 0.0;
+double Employee::calculatePay() const {// Calculate pay with overtime
+    double wage = 0.0;
+    if(this->hoursWorked>0.0 && this->hoursWorked<=40)
+    {
+        wage = this->hourlyWage * this->hoursWorked;
+    }
+    if(this->hoursWorked>40 && this->hoursWorked<100000)
+    {
+        wage = this->hourlyWage * 40 + (this->hoursWorked - 40) * this->hourlyWage * 1.5;
+    }
+    return wage;
 }
 
 void Employee::resetHours() {
-    // TODO: Set hoursWorked back to 0
+    this->hoursWorked=0;
 }
 
 void Employee::display() const {
@@ -129,30 +190,52 @@ void Employee::display() const {
 // STANDARDROOM CLASS IMPLEMENTATION
 // ============================================================================
 
-StandardRoom::StandardRoom() : Room() {
-    // TODO: Initialize with defaults
-    // numBeds = 1, hasWindow = true, currentGuest = nullptr
+StandardRoom::StandardRoom() : Room() {// Initialize with defaults
+    numBeds = 1;
+    hasWindow = true;
+    currentGuest = nullptr;
 }
 
 StandardRoom::StandardRoom(int roomNumber, int floor, int numBeds, bool hasWindow)
-    : Room(roomNumber, floor) {
-    // TODO: Initialize StandardRoom-specific members
-    // Don't forget: currentGuest = nullptr
+    : Room(roomNumber, floor) {// Initialize StandardRoom-specific members
+        this->numBeds = numBeds;
+        this->hasWindow = hasWindow;
+        this->currentGuest = nullptr;
 }
 
 int StandardRoom::getNumBeds() const {
-    return 0;  // TODO
+    return numBeds;
 }
 
 bool StandardRoom::getHasWindow() const {
-    return false;  // TODO
+    return hasWindow;
 }
 
 double StandardRoom::getBasePrice() const {
-    // TODO: Calculate base price
-    // 1 bed: $89/night, 2 beds: $109/night
-    // Add $10 if has window
-    return 0.0;
+    double basePrice = 0.0;
+    if(this->numBeds==1)
+    {
+        if(this->hasWindow==true)
+        {
+            basePrice = 89.0 + 10.0;
+        }
+        if(this->hasWindow==false)
+        {
+            basePrice = 89.0;
+        }
+    }
+    if(this->numBeds==2)
+    {
+        if(this->hasWindow==true)
+        {
+            basePrice = 109.0 + 10.0;
+        }
+        if(this->hasWindow==false)
+        {
+            basePrice = 109.0;
+        }
+    }
+    return basePrice;
 }
 
 const char* StandardRoom::getRoomType() const {
@@ -160,44 +243,56 @@ const char* StandardRoom::getRoomType() const {
 }
 
 int StandardRoom::getMaxOccupancy() const {
-    // TODO: 1 bed = 2 people, 2 beds = 4 people
-    return 0;
+    int numPeople;
+    numPeople = numBeds * 2;
+    return numPeople;
 }
 
 const char* StandardRoom::getAmenities() const {
-    // TODO: Return amenities string
-    // "WiFi, TV, Air Conditioning" + ", Window View" if hasWindow
-    return "";
+    if(hasWindow==true)
+    {
+        return "WiFi, TV, Air Conditioning, Window View";
+    }
+    return "WiFi, TV, Air Conditioning";
 }
 
 Guest* StandardRoom::getCurrentGuest() const {
-    return nullptr;  // TODO
+    return this->currentGuest;
 }
 
 bool StandardRoom::isVacant() const {
-    // TODO: Return true if currentGuest is nullptr
-    return true;
+    bool vac = true;
+    if(this->currentGuest!=nullptr)
+    {
+        vac = false;
+    }
+    return vac;
 }
 
 bool StandardRoom::checkIn(Guest* guest) {
-    // TODO: Implement check-in logic
-    // 1. Check if guest is not nullptr
-    // 2. Check if room is vacant, clean, and not under maintenance
-    // 3. Set currentGuest to guest
-    // 4. Set guest's checkedIn status to true (guest->setCheckedIn(true))
-    // 5. Mark room as not clean (setClean(false))
-    // 6. Return true if successful, false otherwise
-    return false;
+    bool chkIn = false;
+    if(guest!=nullptr)
+    {
+        if(this->isVacant()==true && this->isClean==true && this->isUnderMaintenance==false)
+        {
+            this->currentGuest=guest;
+            guest->setCheckedIn(true);
+            setClean(false);
+            chkIn = true;
+        }
+    }
+    return chkIn;
 }
 
 Guest* StandardRoom::checkOut() {
-    // TODO: Implement check-out logic
-    // 1. If no guest, return nullptr
-    // 2. Save current guest pointer
-    // 3. Set guest's checkedIn status to false
-    // 4. Set currentGuest to nullptr
-    // 5. Return the saved guest pointer
-    return nullptr;
+    Guest* chkOut = nullptr;
+    if(this->currentGuest!=nullptr)
+    {
+        currentGuest->setCheckedIn(false);
+        chkOut = getCurrentGuest();
+        this->currentGuest = nullptr;
+    }
+    return chkOut;
 }
 
 void StandardRoom::display() const {
@@ -209,42 +304,109 @@ void StandardRoom::display() const {
 // DELUXEROOM CLASS IMPLEMENTATION
 // ============================================================================
 
-DeluxeRoom::DeluxeRoom() : Room() {
-    // TODO: Initialize with defaults
-    // numBeds = 1, hasBalcony = false, hasMiniFridge = true, 
-    // viewType = "City", currentGuest = nullptr
+DeluxeRoom::DeluxeRoom() : Room() {// Initialize with defaults
+    numBeds = 1;
+    hasBalcony = false;
+    hasMiniFridge = true;
+    strcpy(viewType, "");
+    currentGuest = nullptr;
 }
 
 DeluxeRoom::DeluxeRoom(int roomNumber, int floor, int numBeds,
                        bool hasBalcony, const char* viewType)
-    : Room(roomNumber, floor) {
-    // TODO: Initialize DeluxeRoom-specific members
-    // hasMiniFridge is always true for deluxe rooms
-    // Don't forget: currentGuest = nullptr
+    : Room(roomNumber, floor) {// Initialize DeluxeRoom-specific members
+    this->numBeds=numBeds;
+    this->hasBalcony=hasBalcony;
+    this->hasMiniFridge=true;
+    strcpy(this->viewType, viewType);
+    this->currentGuest=nullptr;
 }
 
 int DeluxeRoom::getNumBeds() const {
-    return 0;  // TODO
+    return numBeds;
 }
 
 bool DeluxeRoom::getHasBalcony() const {
-    return false;  // TODO
+    return hasBalcony;
 }
 
 bool DeluxeRoom::getHasMiniFridge() const {
-    return false;  // TODO
+    return hasMiniFridge;
 }
 
 const char* DeluxeRoom::getViewType() const {
-    return "";  // TODO
+    return viewType;
 }
 
 double DeluxeRoom::getBasePrice() const {
-    // TODO: Calculate base price
-    // 1 bed: $149, 2 beds: $179
-    // Add $25 if has balcony
-    // Add $15 for Ocean view, $10 for Pool view
-    return 0.0;
+    double basePrice = 0.0;
+    if(numBeds==1)
+    {
+        if(hasBalcony==true)
+        {
+            if(strcmp(viewType, "Ocean")==0)
+            {
+                basePrice = 149.0 + 25.0 + 15.0;
+            }
+            if(strcmp(viewType, "Pool")==0)
+            {
+                basePrice = 149.0 + 25.0 + 10.0;
+            }
+            if(strcmp(viewType, "Ocean")!=0 && strcmp(viewType, "Pool")!=0)
+            {
+                basePrice = 149.0 + 25.0;
+            }
+        }
+        if(hasBalcony!=true)
+        {
+            if(strcmp(viewType, "Ocean")==0)
+            {
+                basePrice = 149.0 + 15.0;
+            }
+            if(strcmp(viewType, "Pool")==0)
+            {
+                basePrice = 149.0 + 10.0;
+            }
+            if(strcmp(viewType, "Ocean")!=0 && strcmp(viewType, "Pool")!=0)
+            {
+                basePrice = 149.0;
+            }
+        }
+    }
+    if(numBeds==2)
+    {
+        if(hasBalcony==true)
+        {
+            if(strcmp(viewType, "Ocean")==0)
+            {
+                basePrice = 179.0 + 25.0 + 15.0;
+            }
+            if(strcmp(viewType, "Pool")==0)
+            {
+                basePrice = 179.0 + 25.0 + 10.0;
+            }
+            if(strcmp(viewType, "Ocean")!=0 && strcmp(viewType, "Pool")!=0)
+            {
+                basePrice = 179.0 + 25.0;
+            }
+        }
+        if(hasBalcony!=true)
+        {
+            if(strcmp(viewType, "Ocean")==0)
+            {
+                basePrice = 179.0 + 15.0;
+            }
+            if(strcmp(viewType, "Pool")==0)
+            {
+                basePrice = 179.0 + 10.0;
+            }
+            if(strcmp(viewType, "Ocean")!=0 && strcmp(viewType, "Pool")!=0)
+            {
+                basePrice = 179.0;
+            }
+        }
+    }
+    return basePrice;
 }
 
 const char* DeluxeRoom::getRoomType() const {
@@ -252,45 +414,60 @@ const char* DeluxeRoom::getRoomType() const {
 }
 
 int DeluxeRoom::getMaxOccupancy() const {
-    // TODO: numBeds + 2 (e.g., 1 bed = 3 people, 2 beds = 4 people)
-    return 0;
+    int maxPeople = 0;
+    maxPeople = numBeds + 2;
+    return maxPeople;
 }
 
 const char* DeluxeRoom::getAmenities() const {
-    // TODO: Return amenities string
-    // "WiFi, TV, AC, Mini-Fridge, [viewType] View"
-    // Add ", Private Balcony" if hasBalcony
-    return "";
+    if(hasBalcony==true)
+    {
+        return "WiFi, TV, AC, Mini-Fridge, [viewType] View, Private Balcony";
+    }
+    return "WiFi, TV, AC, Mini-Fridge, [viewType] View";
 }
 
 Guest* DeluxeRoom::getCurrentGuest() const {
-    return nullptr;  // TODO
+    if(this->currentGuest!=nullptr)
+    {
+        return this->currentGuest;
+    }
+    return nullptr;
 }
 
 bool DeluxeRoom::isVacant() const {
-    // TODO: Return true if currentGuest is nullptr
-    return true;
+    bool vacant = true;
+    if(currentGuest!=nullptr)
+    {
+        vacant=false;
+    }
+    return vacant;
 }
 
 bool DeluxeRoom::checkIn(Guest* guest) {
-    // TODO: Implement check-in logic (same as StandardRoom)
-    // 1. Check if guest is not nullptr
-    // 2. Check if room is vacant, clean, and not under maintenance
-    // 3. Set currentGuest to guest
-    // 4. Set guest's checkedIn status to true
-    // 5. Mark room as not clean
-    // 6. Return true if successful, false otherwise
-    return false;
+    bool chkIn = false;
+    if(this->currentGuest==nullptr)
+    {
+        if(this->isVacant()==true && isClean==true && isUnderMaintenance==false)
+        {
+            this->currentGuest = guest;
+            guest->setCheckedIn(true);
+            isClean=false;
+            chkIn = true;
+        }
+        
+    }
+    return chkIn;
 }
 
 Guest* DeluxeRoom::checkOut() {
-    // TODO: Implement check-out logic (same as StandardRoom)
-    // 1. If no guest, return nullptr
-    // 2. Save current guest pointer
-    // 3. Set guest's checkedIn status to false
-    // 4. Set currentGuest to nullptr
-    // 5. Return the saved guest pointer
-    return nullptr;
+    Guest* chkOut = nullptr;
+    if(this->currentGuest!=nullptr)
+    {
+        chkOut = this->currentGuest;
+        this->currentGuest = nullptr;
+    }
+    return chkOut;
 }
 
 void DeluxeRoom::display() const {
@@ -302,46 +479,112 @@ void DeluxeRoom::display() const {
 // SUITE CLASS IMPLEMENTATION
 // ============================================================================
 
-Suite::Suite() : Room() {
-    // TODO: Initialize with defaults
-    // numBedrooms = 1, squareFeet = 600, hasKitchen = false, 
-    // hasLivingRoom = true, hasJacuzzi = false, currentGuest = nullptr
+Suite::Suite() : Room() {// Initialize with defaults
+    numBedrooms = 1;
+    squareFeet = 600;
+    hasKitchen = false;
+    hasLivingRoom = true;
+    hasJacuzzi = false;
+    currentGuest = nullptr;
 }
 
 Suite::Suite(int roomNumber, int floor, int numBedrooms, int squareFeet,
              bool hasKitchen, bool hasJacuzzi)
-    : Room(roomNumber, floor) {
-    // TODO: Initialize Suite-specific members
-    // hasLivingRoom is always true for suites
-    // Don't forget: currentGuest = nullptr
+    : Room(roomNumber, floor) {// Initialize Suite-specific members
+    this->numBedrooms=numBedrooms;
+    this->squareFeet=squareFeet;
+    this->hasKitchen=hasKitchen;
+    this->hasLivingRoom=true;
+    this->hasJacuzzi=hasJacuzzi;
+    this->currentGuest=nullptr;
 }
 
 int Suite::getNumBedrooms() const {
-    return 0;  // TODO
+    return numBedrooms;
 }
 
 bool Suite::getHasKitchen() const {
-    return false;  // TODO
+    return hasKitchen;
 }
 
 bool Suite::getHasLivingRoom() const {
-    return false;  // TODO
+    return hasLivingRoom;
 }
 
 bool Suite::getHasJacuzzi() const {
-    return false;  // TODO
+    return hasJacuzzi;
 }
 
 int Suite::getSquareFeet() const {
-    return 0;  // TODO
+    return squareFeet;
 }
 
 double Suite::getBasePrice() const {
-    // TODO: Calculate base price
-    // 1 bedroom: $299, 2 bedrooms: $399, 3+: $549
-    // Add $75 if has kitchen
-    // Add $100 if has jacuzzi
-    return 0.0;
+    double basePrice = 0.0;
+    if(numBedrooms==0)
+    {
+        return 0.0;
+    }
+    if(numBedrooms==1)
+    {
+        if(hasKitchen==true && hasJacuzzi!=true)
+        {
+            basePrice = 299.0 + 75.0;
+        }
+        if(hasKitchen!=true && hasJacuzzi==true)
+        {
+            basePrice = 299.0 + 100.0;
+        }
+        if(hasKitchen==true && hasJacuzzi==true)
+        {
+            basePrice = 299.0 + 75.0 + 100.0;
+        }
+        if(hasKitchen!=true && hasJacuzzi!=true)
+        {
+            basePrice = 299.0;
+        }
+        
+    }
+        if(numBedrooms==2)
+    {
+        if(hasKitchen==true && hasJacuzzi!=true)
+        {
+            basePrice = 399.0 + 75.0;
+        }
+        if(hasKitchen!=true && hasJacuzzi==true)
+        {
+            basePrice = 399.0 + 100.0;
+        }
+        if(hasKitchen==true && hasJacuzzi==true)
+        {
+            basePrice = 399.0 + 75.0 + 100.0;
+        }
+        if(hasKitchen!=true && hasJacuzzi!=true)
+        {
+            basePrice = 399.0;
+        }
+        
+    }
+        if(numBedrooms>=3)
+    {
+        if(hasKitchen==true && hasJacuzzi!=true)
+        {
+            basePrice = 549.0 + 75.0;
+        }
+        if(hasKitchen!=true && hasJacuzzi==true)
+        {
+            basePrice = 549.0 + 100.0;
+        }
+        if(hasKitchen==true && hasJacuzzi==true)
+        {
+            basePrice = 549.0 + 75.0 + 100.0;
+        }
+        if(hasKitchen!=true && hasJacuzzi!=true)
+        {
+            basePrice = 549.0;
+        }
+    }
+    return basePrice;
 }
 
 const char* Suite::getRoomType() const {
@@ -349,54 +592,79 @@ const char* Suite::getRoomType() const {
 }
 
 int Suite::getMaxOccupancy() const {
-    // TODO: (numBedrooms * 2) + 2
-    // e.g., 1 bedroom = 4 people, 2 bedrooms = 6 people
-    return 0;
+    int naxOcc = 0;
+    naxOcc = (numBedrooms * 2) + 2;
+    return naxOcc;
 }
 
 const char* Suite::getAmenities() const {
-    // TODO: Return amenities string
-    // "WiFi, TV, AC, Living Room"
-    // Add ", Full Kitchen" if hasKitchen
-    // Add ", Jacuzzi" if hasJacuzzi
-    return "";
+    if(hasKitchen==true)
+    {
+        return "WiFi, TV, AC, Living Room, Full Kitchen";
+    }
+    if(hasJacuzzi==true)
+    {
+        return "WiFi, TV, AC, Living Room, Jacuzzi";
+    }
+    if(hasKitchen==true && hasJacuzzi==true)
+    {
+        return "WiFi, TV, AC, Living Room, Full Kitchen, Jacuzzi";
+    }
+    return "WiFi, TV, AC, Living Room";
 }
 
 Guest* Suite::getCurrentGuest() const {
-    return nullptr;  // TODO
+    if(this->currentGuest!=nullptr)
+    {
+        return this->currentGuest;
+    }
+    return nullptr;
 }
 
 bool Suite::isVacant() const {
-    // TODO: Return true if currentGuest is nullptr
+    if(currentGuest!=nullptr)
+    {
+        return false;
+    }
     return true;
 }
 
 bool Suite::checkIn(Guest* guest) {
-    // TODO: Implement check-in logic (same as StandardRoom)
-    // 1. Check if guest is not nullptr
-    // 2. Check if room is vacant, clean, and not under maintenance
-    // 3. Set currentGuest to guest
-    // 4. Set guest's checkedIn status to true
-    // 5. Mark room as not clean
-    // 6. Return true if successful, false otherwise
-    return false;
+    bool here = false;
+    if(guest!=nullptr)
+    {
+        if(isVacant()==true && isClean==true && isUnderMaintenance!=true)
+        {
+            currentGuest=guest;
+            guest->setCheckedIn(true);
+            isVacant();
+            this->isClean = false;
+            here = true;
+        }
+    }
+    return here;
 }
 
 Guest* Suite::checkOut() {
-    // TODO: Implement check-out logic (same as StandardRoom)
-    // 1. If no guest, return nullptr
-    // 2. Save current guest pointer
-    // 3. Set guest's checkedIn status to false
-    // 4. Set currentGuest to nullptr
-    // 5. Return the saved guest pointer
+    Guest* gone;
+    if(currentGuest!=nullptr)
+    {
+        gone = this->currentGuest;
+        currentGuest->setCheckedIn(false);
+        this->currentGuest = nullptr;
+        return gone;
+    }
     return nullptr;
 }
 
 double Suite::calculatePrice(int nights) const {
-    // TODO: Override to add extended stay discount
-    // Get base total: getBasePrice() * nights
-    // If nights >= 7, apply 10% discount (multiply by 0.9)
-    return 0.0;
+    double totPri = 0.0;
+    totPri = getBasePrice() * nights;
+    if(nights>=7)
+    {
+        totPri=totPri*0.9;
+    }
+    return totPri;
 }
 
 void Suite::display() const {
@@ -408,40 +676,52 @@ void Suite::display() const {
 // CASHPAYMENT CLASS IMPLEMENTATION
 // ============================================================================
 
-CashPayment::CashPayment() : Payment() {
-    // TODO: Initialize with defaults
-    // amountTendered = 0.0, changeGiven = 0.0
+CashPayment::CashPayment() : Payment() {// Initialize with defaults
+    amountTendered = 0.0;
+    changeGiven = 0.0;
 }
 
 CashPayment::CashPayment(int paymentId, double amount, double amountTendered)
-    : Payment(paymentId, amount) {
-    // TODO: Initialize CashPayment-specific members
+    : Payment(paymentId, amount) {// Initialize CashPayment-specific members
+    this->amountTendered=amountTendered;
+    this->changeGiven=0.0;
+    
     // Calculate changeGiven (if amountTendered >= amount, else 0)
 }
 
 double CashPayment::getAmountTendered() const {
-    return 0.0;  // TODO
+    return amountTendered;
 }
 
 double CashPayment::getChangeGiven() const {
-    return 0.0;  // TODO
+    return changeGiven;
 }
 
 bool CashPayment::processPayment() {
-    // TODO: Process the payment
-    // 1. Check if already processed (return false)
-    // 2. Check if amountTendered >= amount (return false if not)
-    // 3. Set isProcessed to true
-    // 4. Return true
-    return false;
+    bool process = false;
+    if(isProcessed==false)
+    {
+        if(amountTendered>=amount)
+        {
+            if(amountTendered>=amount)
+            {
+                isProcessed = true;
+                process = true;
+                changeGiven = amountTendered-amount;
+            }
+        }
+    }
+    return process;
 }
 
 bool CashPayment::refund() {
-    // TODO: Refund the payment
-    // 1. Check if payment was processed (return false if not)
-    // 2. Set isProcessed to false
-    // 3. Return true
-    return false;
+    bool rfnd = false;
+    if(isProcessed!=false)
+    {
+        isProcessed = false;
+        rfnd = true;
+    }
+    return rfnd;
 }
 
 const char* CashPayment::getPaymentType() const {
@@ -456,56 +736,63 @@ void CashPayment::display() const {
 }
 
 double CashPayment::getTransactionFee() const {
-    return 0.0;  // Cash has no fees
+    return 0.0;
 }
 
 // ============================================================================
 // CREDITCARDPAYMENT CLASS IMPLEMENTATION
 // ============================================================================
 
-CreditCardPayment::CreditCardPayment() : Payment() {
-    // TODO: Initialize with defaults
-    // Empty strings, isAuthorized = false
+CreditCardPayment::CreditCardPayment() : Payment() {// Initialize with defaults
+    isAuthorized = false;
+    strcpy(cardHolderName, "");
+    strcpy(cardNumber, "");
+    strcpy(expirationDate, "");
 }
 
 CreditCardPayment::CreditCardPayment(int paymentId, double amount,
                                      const char* lastFourDigits,
                                      const char* cardHolderName,
                                      const char* expDate)
-    : Payment(paymentId, amount) {
-    // TODO: Initialize CreditCardPayment-specific members
-    // isAuthorized = false
+    : Payment(paymentId, amount) {// Initialize CreditCardPayment-specific members
+    this->isAuthorized=false;
+    strcpy(this->cardHolderName, cardHolderName);
+    strcpy(this->cardNumber, lastFourDigits);
+    strcpy(this->expirationDate, expDate);
 }
 
 const char* CreditCardPayment::getCardNumber() const {
-    return "";  // TODO
+    return this->cardNumber;
 }
 
 const char* CreditCardPayment::getCardHolderName() const {
-    return "";  // TODO
+    return this->cardHolderName;
 }
 
 bool CreditCardPayment::getIsAuthorized() const {
-    return false;  // TODO
+    return isAuthorized;
 }
 
 bool CreditCardPayment::processPayment() {
-    // TODO: Process the payment
-    // 1. Check if already processed (return false)
-    // 2. Set isAuthorized to true
-    // 3. Set isProcessed to true
-    // 4. Return true
-    
-    return false;
+    bool procPay = false;
+    if(isProcessed!=true)
+    {
+        isAuthorized = true;
+        isProcessed = true;
+        procPay = true;
+    }
+    return procPay;
 }
 
 bool CreditCardPayment::refund() {
-    // TODO: Refund the payment
-    // 1. Check if payment was processed (return false if not)
-    // 2. Set isProcessed to false
-    // 3. Set isAuthorized to false
-    // 4. Return true
-    return false;
+    bool rfnd = false;
+    if(isProcessed!=false)
+    {
+        isProcessed = false;
+        isAuthorized = false;
+        rfnd = true;
+    }
+    return rfnd;
 }
 
 const char* CreditCardPayment::getPaymentType() const {
@@ -521,27 +808,28 @@ void CreditCardPayment::display() const {
 }
 
 double CreditCardPayment::getTransactionFee() const {
-    // TODO: Return 2.5% of amount
-    return 0.0;
+    double fee = 0.0;
+    fee = this->amount * 0.025;
+    return fee;
 }
 
 // ============================================================================
 // LOYALTYPOINTSPAYMENT CLASS IMPLEMENTATION
 // ============================================================================
 
-LoyaltyPointsPayment::LoyaltyPointsPayment() : Payment() {
-    // TODO: Initialize with defaults
-    // guest = nullptr, pointsUsed = 0
+LoyaltyPointsPayment::LoyaltyPointsPayment() : Payment() {// Initialize with defaults
+    guest = nullptr;
+    pointsUsed = 0;
 }
 
 LoyaltyPointsPayment::LoyaltyPointsPayment(int paymentId, double amount, Guest* guest)
     : Payment(paymentId, amount) {
-    // TODO: Initialize LoyaltyPointsPayment-specific members
-    // Calculate pointsUsed: amount * POINTS_PER_DOLLAR
+    this->guest=guest;
+    this->pointsUsed=amount*POINTS_PER_DOLLAR;
 }
 
 int LoyaltyPointsPayment::getPointsUsed() const {
-    return 0;  // TODO
+    return pointsUsed;
 }
 
 int LoyaltyPointsPayment::getPointsPerDollar() const {
@@ -549,29 +837,41 @@ int LoyaltyPointsPayment::getPointsPerDollar() const {
 }
 
 bool LoyaltyPointsPayment::canAfford() const {
-    // TODO: Check if guest has enough points
-    // Return false if guest is nullptr
-    return false;
+    bool canAff = false;
+    if(this->guest!=nullptr)
+    {
+        if(this->guest->getLoyaltyPoints()>=pointsUsed)
+        {
+            canAff = true;
+
+        }
+    }
+    return canAff;
 }
 
 bool LoyaltyPointsPayment::processPayment() {
-    // TODO: Process the payment
-    // 1. Check if already processed (return false)
-    // 2. Check if can afford (return false)
-    // 3. Redeem points from guest (use guest->redeemPoints())
-    // 4. If redeem fails, return false
-    // 5. Set isProcessed to true
-    // 6. Return true
-    return false;
+    bool procPay = false;
+    if(guest!=nullptr && isProcessed!=true && canAfford()!=false)
+    {
+        guest->redeemPoints(pointsUsed);
+        isProcessed = true;
+        procPay = true;
+    }
+    return procPay;
 }
 
 bool LoyaltyPointsPayment::refund() {
-    // TODO: Refund the payment
-    // 1. Check if payment was processed (return false if not)
-    // 2. Add points back to guest (if guest not nullptr)
-    // 3. Set isProcessed to false
-    // 4. Return true
-    return false;
+    bool rfnd = false;
+    if(guest!=nullptr)
+    {
+        if(isProcessed!=false)
+        {
+            guest->addLoyaltyPoints(pointsUsed);
+            isProcessed = false;
+            rfnd = true;
+        }
+    }
+    return rfnd;
 }
 
 const char* LoyaltyPointsPayment::getPaymentType() const {
@@ -579,14 +879,8 @@ const char* LoyaltyPointsPayment::getPaymentType() const {
 }
 
 void LoyaltyPointsPayment::display() const {
-    // TODO: Display loyalty points payment info
-    // "LOYALTY POINTS PAYMENT #[id]"
-    // "  Guest: [name]" (if guest not nullptr)
-    // "  Amount: $[amount] ([points] points)"
-    // "  Rate: [POINTS_PER_DOLLAR] points per dollar"
-    // "  Status: [Processed/Pending]"
 }
 
 double LoyaltyPointsPayment::getTransactionFee() const {
-    return 0.0;  // No fees for loyalty points
+    return 0.0;
 }
